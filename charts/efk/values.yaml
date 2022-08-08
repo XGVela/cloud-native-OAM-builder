@@ -1,0 +1,33 @@
+# Default values for efk.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+elasticsearch:
+  enabled: true
+  image: "registry.local:9001/elastic/elasticsearch"
+  imageTag: "7.8.1"
+  enableProxy: true
+
+
+kibana:
+  enabled: true
+  image: "registry.local:9001/elastic/kibana"
+  imageTag: "7.8.1"
+
+filebeat:
+  enabled: true
+  image: "registry.local:9001/elastic/filebeat"
+  imageTag: "7.8.1"
+
+metricbeat:
+  enabled: false
+  image: "registry.local:9001/ranchercharts/beats-metricbeat"
+  imageTag: "7.3.0"
+  kube-state-metrics:
+    image:
+      repository: registry.local:9001/ranchercharts/coreos-kube-state-metrics
+      tag: v1.7.2
+
+global:
+  nginxProxy:
+    repository: registry.local:9001/rancher/nginx
+    tag: 1.15.8-alpine

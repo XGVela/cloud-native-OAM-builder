@@ -1,6 +1,9 @@
 # cloud-native-OAM-builder
 
-#### You should have the following before getting started with the deployment
+Cloud-native-OAM-builder provide packages of all cloud native OAM functions.
+
+---
+**To start deployment, you should check your environment and build images of all cloud native OAM functions.**
 
 1.A running Kubernetes cluster.
 
@@ -13,6 +16,8 @@
 ---
 **Deploy cloud native OAM relied General PaaS functions**
 
+Within [cloud-native-OAM-builder/charts](https://github.com/XGVela/cloud-native-OAM-builder/tree/main/charts), it lists the helm charts of all relied General PaaS functions, which are required by other cloud native OAM Telco PaaS functions. To deploy those Telco PaaS functions, these General PaaS functions should be deployed first using the following command.
+
 ```bash
 cd /root
 git clone git@github.com:XGVela/cloud-native-OAM-builder.git
@@ -23,6 +28,8 @@ helm upgrade oam-infra /root/cloud-native-OAM-builder/charts -n oam-system
 
 ---
 **Deploy cloud native OAM Telco PaaS functions**
+
+Within [cloud-native-OAM-builder/oam-charts](https://github.com/XGVela/cloud-native-OAM-builder/tree/main/oam-charts), it contains helm charts of all cloud native OAM Telco PaaS functions.
 
 ```bash
 cd /root

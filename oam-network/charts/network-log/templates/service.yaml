@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "network-log.fullname" . }}
+  labels:
+    {{- include "network-log.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.serverPort }}
+      targetPort: http
+      protocol: TCP
+      name: serverhttp
+      nodePort: {{ .Values.service.nodeServerPort }}
+  selector:
+    {{- include "network-log.selectorLabels" . | nindent 4 }}

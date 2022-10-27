@@ -21,9 +21,9 @@ Within [cloud-native-OAM-builder/charts](https://github.com/XGVela/cloud-native-
 ```bash
 cd /root
 git clone git@github.com:XGVela/cloud-native-OAM-builder.git
-helm install oam-infra /root/cloud-native-OAM-builder/charts -n oam-system
-helm uninstall oam-infra -n oam-system
-helm upgrade oam-infra /root/cloud-native-OAM-builder/charts -n oam-system
+helm install oam /root/cloud-native-OAM-builder/oam-basic -n oam-system
+helm uninstall oam -n oam-system
+helm upgrade oam /root/cloud-native-OAM-builder/oam-basic -n oam-system
 ```
 
 ---
@@ -34,7 +34,7 @@ Within [cloud-native-OAM-builder/oam-charts](https://github.com/XGVela/cloud-nat
 ```bash
 cd /root
 git clone git@github.com:XGVela/cloud-native-OAM-builder.git
-helm install oam-network /root/cloud-native-OAM-builder/oam-charts -n oam-system
+helm install oam-network /root/cloud-native-OAM-builder/oam-network -n oam-system
 helm uninstall oam-network -n oam-system
-helm upgrade oam-network /root/cloud-native-OAM-builder/oam-charts -n oam-system
+helm upgrade oam-network /root/cloud-native-OAM-builder/oam-network -n oam-system
 ```

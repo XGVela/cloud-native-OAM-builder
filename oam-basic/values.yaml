@@ -1,0 +1,271 @@
+# Default values for oam.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+efk:
+ elasticsearch:
+   enabled: true
+   image: "elasticsearch"
+   imageTag: "7.8.1"
+   enableProxy: true
+   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+#   nodeSelector:
+#     tag: business
+   persistence:
+     enabled: false
+
+ kibana:
+   enabled: true
+   image: "kibana"
+   imageTag: "7.8.1"
+#   nodeSelector:
+#     tag: business
+   persistence:
+     enabled: false
+# filebeat:
+#   enabled: true
+#   image: "elastic/filebeat"
+#   imageTag: "7.8.1"
+
+logstash:
+  image: "logstash"
+  imageTag: "8.0.0"
+#  nodeSelector:
+#    tag: business
+  logstashConfig:
+    logstash.yml: |
+      http:
+        host: 0.0.0.0
+      xpack:
+        monitoring:
+          enabled: false
+
+kafka:
+  image:
+    registry: 
+    repository: bitnami/kafka
+    tag: 3.2
+    pullPolicy: IfNotPresent
+  persistence:
+    enabled: false
+    size: 8Gi
+    storageClass: "general"
+#  nodeSelector:
+#    tag: business
+  externalAccess:
+    enabled: true
+    service:
+      type: NodePort
+      nodePorts:
+        - "30994"
+      #  domain: omc-kafka.inspur.com
+      #检查domain
+      domain: 192.168.0.21
+  zookeeper:
+    enabled: true
+    persistence:
+      enabled: false
+
+redis:
+  image:
+    registry: bitnami
+    repository: redis
+    tag: 5.0.8-debian-10-r50
+    pullPolicy: IfNotPresent
+  cluster:
+    # 单点部署
+    enabled: false
+    # 集群部署
+    #enabled: true
+    slaveCount: 2
+  password: In$pur@2204#$!
+  master:
+    disableCommands: [ ]
+    persistence:
+      enabled: false
+      size: 1Gi
+      storageClass: "general"
+    service:
+      ##  Redis Master Service type
+      type: NodePort
+      port: 6379
+      nodePort: 30579
+#    nodeSelector:
+#      tag: business
+  slave:
+    disableCommands: [ ]
+    persistence:
+      enabled: false
+      size: 1Gi
+      storageClass: "general"
+  metrics:
+    enabled: false
+
+mysql:
+  replicaCount: 1
+  namespace: oam-system
+  image:
+    repository: mysql
+    pullPolicy: IfNotPresent
+    tag: "5.7.28"
+  imagePullSecrets: [ ]
+  nameOverride: "oam-mysql"
+  fullnameOverride: "oam-mysql"
+#  nodeSelector:
+#    tag: business
+  service:
+    type: NodePort
+    port: 3306
+    targetPort: 3306
+    nodePort: 30036
+  #本地存储路径
+  basepath:
+    datapath: /root/oam/data
+
+prometheus-adapter:
+  image:
+    repository: directxman12/k8s-prometheus-adapter-amd64
+    tag: v0.8.4
+    pullPolicy: IfNotPresent
+
+prometheus-blackbox-exporter:
+  image:
+    repository: bitnami/blackbox-exporter
+    tag: 0.19.0
+    pullPolicy: IfNotPresent
+#  nodeSelector:
+#    tag: business
+nacos:
+  image:
+    repository: nacos/nacos-server
+    tag: 1.4.1
+    pullPolicy: IfNotPresent
+#  nodeSelector:
+#    tag: business
+  plugin:
+    enable: true
+    image:
+      repository: nacos/nacos-peer-finder-plugin
+      tag: 1.1
+  replicaCount: 1
+  domainName: cluster.local
+  preferhostmode: hostname
+  serverPort: 8848
+  health:
+    enabled: false
+  storage:
+    type: embedded
+    type: mysql
+    db:
+      host: oam-mysql.oam-system
+      name: nacos
+      port: 3306
+      username: root
+      password: Inspur@123
+      param: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+
+
+sftp-conf:
+  replicaCount: 1
+  nameOverride: "oam-sftp-conf"
+  fullnameOverride: "oam-sftp-conf"
+  image:
+    repository: atmoz/sftp
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "alpine"
+  service:
+    type: NodePort
+    nodePort: 30025
+    port: 22
+  basepath:
+    sftpvolumepath: /root/oam/data/sftp/sftp-conf
+#  nodeSelector:
+#    tag: business
+
+sftp-agent:
+  replicaCount: 1
+  nameOverride: "oam-sftp-agent"
+  fullnameOverride: "oam-sftp-agent"
+  image:
+    repository: atmoz/sftp
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "alpine"
+  service:
+    type: NodePort
+    nodePort: 30023
+    port: 22
+  basepath:
+    sftpvolumepath: /root/oam/data/sftp/sftp-agent
+#  nodeSelector:
+#    tag: agent
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "network-config.fullname" . }}
+  labels:
+    {{- include "network-config.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.serverPort }}
+      targetPort:  {{ .Values.service.serverPort }}
+      protocol: TCP
+      name: serverhttp
+      nodePort: {{ .Values.service.nodeServerPort }}
+    - port: {{ .Values.service.grpcPort }}
+      targetPort: {{ .Values.service.grpcPort }}
+      protocol: TCP
+      name: grpchttp
+      nodePort: {{ .Values.service.nodeGrpcPort }}
+  selector:
+    {{- include "network-config.selectorLabels" . | nindent 4 }}

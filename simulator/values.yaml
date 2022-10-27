@@ -1,0 +1,126 @@
+# Copyright 2021 Mavenir
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+######## CNF TEMPLATE DEFINITIONS ###########
+
+global:
+  xgvela:
+    use_release_ns: false
+    create_ns: true
+    topogw_fqdn: "topo-gw.mvnr-xgvela1-mgmt-xgvela-xgvela1.svc.cluster.local:8080"
+    mgmtNodeSelector:
+      enabled: false
+      labelKey: mgmt
+      labelValue: true
+    etcd_svc_fqdn: "etcd.cim-etcd.svc.cluster.local:2379"
+    kafka_svc_fqdn: "kafka.cim-kafka.svc.cluster.local:9092"
+    k8s_svc_fqdn: "kubernetes.default.svc.cluster.local"
+    zk_svc_fqdn: "kafka-zookeeper.cim-kafka.svc.cluster.local:2181"
+    image:
+     repository: "registry.local:9001/omc/oam-network-simulator"
+     tag: "1.0-SNAPSHOT"
+     pullPolicy: IfNotPresent
+     imagePullSecrets:
+       - name:  "secret-registry-auth"
+nf:
+  version: "v0.1"
+  vendorId: "inspur"
+  xgvelaId: "xgvela1" #do not edit
+  nfClass: "infra"
+  nfType: "upf"
+  nfId: "upfinstanceid001"
+
+  cnftpl_configmap:
+    mgmt_cfg:
+      create: true
+      metaspec:
+        annotations:
+          configMgmt: enabled
+    static_cfg:
+      create: true
+      metaspec: {}
+    env_cfg:
+      create: false
+      metaspec: {}
+  cnftpl_secret:
+      create: false
+      metaspec: {}
+      secretspec: {}
+  cnftpl_namespaces:
+      create: false
+      metaspec: {}
+  cnftpl_dashboard:
+      create: false
+      metaspec: {}
+  cnftpl_eventdef:
+      create: true
+      metaspec: {}
+  cnftpl_alertsdef:
+      create: false
+      metaspec: {}
+  cnftpl_metricsdef:
+      create: false
+      metaspec: {}
+
+###########################################
+
+serviceAccount: simulator-account 
+hub: registry.local:9001
+
+componentSpec:
+  service_fend:
+    metaspec: {}
+    ports:
+     serverPort: 20001
+     nodeServerPort:  30001
+     grpcPort:  20100
+     nodeGrpcPort: 30102
+    type: NodePort
+
+  deployment:
+    replicas: 1
+    pod_metaspec:
+      labels:
+        app: simulator
+      annotations:
+        xgvela.com/me: '{"locationName":"beijing","swVersion":"v1.0","managedBy":{"mns.address.primary":"IP=mns@primary","mns.address.secondary":"IP=mns@secondary"}}'
+        prometheus.io/scrape: "false"
+        prometheus.io/path: /metrics
+
+    topo_engine:
+      operations:
+        running_operation_nf: "20"
+        pending_operation_nf: "20"
+        pending_timeout: "300"
+        running_timeout: "600"
+        completed_timeout: "900"
+      resource:
+        limit_memory: 500Mi
+        limit_cpu: 500m
+        request_memory: 300Mi
+        request_cpu: 200m
+
+scaling:
+  max_replicas: 2
+  min_replicas: 1
+  target_cpu_percentage: 70
+
+etcd_svc_fqdn: "etcd-headless.cim-etcd.svc.cluster.local:2379"
+kafka_svc_fqdn: "kafka-headless.cim-kafka.svc.cluster.local:9092"
+k8s_svc_fqdn: "kubernetes.default.svc.cluster.local"
+zk_svc_fqdn: "kafka-zookeeper-headless.cim-kafka.svc.cluster.local:2181"
+
+log:
+  path: /data/oam-network-simulator/logs/
+

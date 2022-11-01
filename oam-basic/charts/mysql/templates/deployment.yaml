@@ -42,29 +42,29 @@ spec:
               containerPort: 3306
               hostPort: {{ .Values.service.hostPort }}
               protocol: TCP
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: data
-            - mountPath: /etc/mysql
-              name: config
-            - mountPath: /update
-              name: "update"
+{{/*          volumeMounts:*/}}
+{{/*            - mountPath: /var/lib/mysql*/}}
+{{/*              name: data*/}}
+{{/*            - mountPath: /etc/mysql*/}}
+{{/*              name: config*/}}
+{{/*            - mountPath: /update*/}}
+{{/*              name: "update"*/}}
           resources:
       {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Always
-      volumes:
-        - hostPath:
-            path: {{.Values.basepath.datapath}}/omc-mysql/data
-            type: DirectoryOrCreate
-          name: data
-        - hostPath:
-            path: {{.Values.basepath.datapath}}/omc-mysql/config
-            type: DirectoryOrCreate
-          name: config
-        - hostPath:
-            path: {{.Values.basepath.datapath}}/omc-mysql/update
-            type: DirectoryOrCreate
-          name: "update"
+{{/*      volumes:*/}}
+{{/*        - hostPath:*/}}
+{{/*            path: {{.Values.basepath.datapath}}/omc-mysql/data*/}}
+{{/*            type: DirectoryOrCreate*/}}
+{{/*          name: data*/}}
+{{/*        - hostPath:*/}}
+{{/*            path: {{.Values.basepath.datapath}}/omc-mysql/config*/}}
+{{/*            type: DirectoryOrCreate*/}}
+{{/*          name: config*/}}
+{{/*        - hostPath:*/}}
+{{/*            path: {{.Values.basepath.datapath}}/omc-mysql/update*/}}
+{{/*            type: DirectoryOrCreate*/}}
+{{/*          name: "update"*/}}
       {{- with .Values.nodeName }}
       nodeName:
       {{- toYaml . | nindent 8 }}

@@ -15,20 +15,25 @@ logstashConfig:
         enabled: false
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
+#     filter {
+#      if ([tags][0] == "upfinstanceid001") {
+#        drop { }
+#      }
+#    }
 logstashPipeline:
   logstash.conf: |
     input {
       kafka {
-        bootstrap_servers => "oam-kafka:9092"
+        bootstrap_servers => "oam-kafka.oam-system:9092"
         group_id => "es-test"
-        client_id => "log-kubelet"
         topics => ["simulator-log"]
         codec => json
       }
     }
     output {
+    stdout {}
       elasticsearch {
-        hosts => "elasticsearch-master:9200"
+        hosts => "elasticsearch-master.oam-system:9200"
         index => "simulator-%{+YYYY.MM.dd}"
       }
     }

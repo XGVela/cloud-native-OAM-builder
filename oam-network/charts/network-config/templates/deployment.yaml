@@ -61,7 +61,7 @@ spec:
                 -Dspring.cloud.nacos.discovery.server-addr=oam-nacos.oam-system:8848
       volumes:
         - hostPath:
-            path: /root/oam/data/sftp/sftp-conf/sftp/
+            path: /root/oam/cloud-native-OAM-builder/data/sftp/sftp-conf/sftp/
             type: DirectoryOrCreate
           name: sftp-config-file
       {{- with .Values.nodeSelector }}

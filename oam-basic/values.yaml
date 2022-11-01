@@ -122,7 +122,7 @@ mysql:
     nodePort: 30036
   #本地存储路径
   basepath:
-    datapath: /root/oam/data
+    datapath: /root/oam/cloud-native-OAM-builder/data
 
 prometheus-adapter:
   image:
@@ -181,7 +181,7 @@ sftp-conf:
     nodePort: 30025
     port: 22
   basepath:
-    sftpvolumepath: /root/oam/data/sftp/sftp-conf
+    sftpvolumepath: /root/oam/cloud-native-OAM-builder/data/sftp/sftp-conf
 #  nodeSelector:
 #    tag: business
 
@@ -199,7 +199,7 @@ sftp-agent:
     nodePort: 30023
     port: 22
   basepath:
-    sftpvolumepath: /root/oam/data/sftp/sftp-agent
+    sftpvolumepath: /root/oam/cloud-native-OAM-builder/data/sftp/sftp-agent
 #  nodeSelector:
 #    tag: agent
 

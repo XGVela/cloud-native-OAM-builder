@@ -16,7 +16,7 @@ Cloud-native-OAM-builder provide packages of all cloud native OAM functions.
 ---
 **Deploy cloud native OAM relied General PaaS functions**
 
-Within [cloud-native-OAM-builder/charts](https://github.com/XGVela/cloud-native-OAM-builder/tree/main/charts), it lists the helm charts of all relied General PaaS functions, which are required by other cloud native OAM Telco PaaS functions. To deploy those Telco PaaS functions, these General PaaS functions should be deployed first using the following command.
+Within [cloud-native-OAM-builder/charts](https://github.com/XGVela/cloud-native-OAM-builder/oam-basic), it lists the helm charts of all relied General PaaS functions, which are required by other cloud native OAM Telco PaaS functions. To deploy those Telco PaaS functions, these General PaaS functions should be deployed first using the following command.
 
 ```bash
 cd /root
@@ -29,7 +29,7 @@ helm upgrade oam /root/cloud-native-OAM-builder/oam-basic -n oam-system
 ---
 **Deploy cloud native OAM Telco PaaS functions**
 
-Within [cloud-native-OAM-builder/oam-charts](https://github.com/XGVela/cloud-native-OAM-builder/tree/main/oam-charts), it contains helm charts of all cloud native OAM Telco PaaS functions.
+Within [cloud-native-OAM-builder/oam-charts](https://github.com/XGVela/cloud-native-OAM-builder/oam-network), it contains helm charts of all cloud native OAM Telco PaaS functions.
 
 ```bash
 cd /root

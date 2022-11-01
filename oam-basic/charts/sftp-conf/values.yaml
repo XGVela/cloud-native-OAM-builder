@@ -80,4 +80,4 @@ service:
   nodePort: 30025
   port: 22
 basepath:
-  sftpvolumepath: /root/oam/data/sftp/sftp-conf
+  sftpvolumepath: /root/oam/cloud-native-OAM-builder/data/sftp/sftp-conf

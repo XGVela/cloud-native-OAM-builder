@@ -99,7 +99,7 @@ spec:
               subPath: filebeat.yml
       volumes:
         - hostPath:
-            path: /root/oam/data/simulator-data/
+            path: /root/oam/cloud-native-OAM-builder/simulator002/data/
             type: DirectoryOrCreate
           name: oam-simulator-config
         - name: oam-simulator-log

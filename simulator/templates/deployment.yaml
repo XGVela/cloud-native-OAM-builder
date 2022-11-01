@@ -78,7 +78,7 @@ spec:
             - name: "nf.type"
               value: "UPF"
             - name: "nf.registerIp"
-              value: "oam-network-nfregister.oam-system"
+              value: "oam-network-agent.oam-system"
             - name: "nf.registerPort"
               value: "20101"
             - name: "nf.signalPort"
@@ -99,7 +99,7 @@ spec:
               subPath: filebeat.yml
       volumes:
         - hostPath:
-            path: /root/oam/data/simulator-data/
+            path: /root/oam/cloud-native-OAM-builder/simulator/data
             type: DirectoryOrCreate
           name: oam-simulator-config
         - name: oam-simulator-log

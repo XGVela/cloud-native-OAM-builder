@@ -62,7 +62,7 @@ kafka:
         - "30994"
       #  domain: omc-kafka.inspur.com
       #检查domain
-      domain: 192.168.0.21
+#      domain: 111.111.63.136
   zookeeper:
     enabled: true
     persistence:
@@ -165,7 +165,24 @@ nacos:
       username: root
       password: Inspur@123
       param: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
-
+  livenessProbe:
+    httpGet:
+      port: "8848"
+      path: /nacos
+    failureThreshold: "3"
+    initialDelaySeconds: "60"
+    periodSeconds: "10"
+    successThreshold: "1"
+    timeoutSeconds: "2"
+  readinessProbe:
+    httpGet:
+      port: "8848"
+      path: /nacos
+    failureThreshold: "3"
+    initialDelaySeconds: "15"
+    periodSeconds: "5"
+    successThreshold: "2"
+    timeoutSeconds: "2"
 
 sftp-conf:
   replicaCount: 1

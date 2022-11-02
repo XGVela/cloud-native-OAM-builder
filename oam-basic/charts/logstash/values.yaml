@@ -15,6 +15,22 @@ logstashConfig:
         enabled: false
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
+
+#     input {
+#     kafka {
+#     bootstrap_servers => "oam-kafka.oam-system:9092"
+#     group_id => "es-test"
+#     topics => ["simulator-log"]
+#     codec => json
+#     }
+#     }
+#     output {
+#     stdout {}
+#     elasticsearch {
+#     hosts => "elasticsearch-master.oam-system:9200"
+#     index => "simulator-%{+YYYY.MM.dd}"
+#     }
+#     }
 #     filter {
 #      if ([tags][0] == "upfinstanceid001") {
 #        drop { }
@@ -31,13 +47,11 @@ logstashPipeline:
       }
     }
     output {
-    stdout {}
       elasticsearch {
         hosts => "elasticsearch-master.oam-system:9200"
         index => "simulator-%{+YYYY.MM.dd}"
       }
     }
-
 # Allows you to add any pattern files in your custom pattern dir
 logstashPatternDir: "/usr/share/logstash/patterns/"
 logstashPattern: { }

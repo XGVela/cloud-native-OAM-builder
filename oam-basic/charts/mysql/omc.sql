@@ -1,5 +1,5 @@
 create database omc DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-use nacos;
+use omc;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

@@ -9,6 +9,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for oam_alarm_active
 -- ----------------------------
+
 DROP TABLE IF EXISTS `oam_alarm_active`;
 CREATE TABLE `oam_alarm_active` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',

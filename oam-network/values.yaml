@@ -93,6 +93,26 @@ network-subscribe-publish:
 #  nodeSelector:
 #    tag: business
 
+network-resource:
+  image:
+    repository: registry.local:9001/omc/oam-network-resource
+    tag: 1.0-SNAPSHOT
+  imagePullSecrets:
+    - name:  secret-registry-auth
+#  nodeSelector:
+#    tag: business
+
+network-signaltrace:
+  image:
+    repository: registry.local:9001/omc/oam-network-signaltrace
+    tag: 1.0-SNAPSHOT
+  imagePullSecrets:
+    - name:  secret-registry-auth
+#  nodeSelector:
+#    tag: business
+
+
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

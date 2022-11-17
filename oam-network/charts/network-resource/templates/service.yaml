@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "network-resource.fullname" . }}
+  labels:
+  {{- include "network-resource.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.serverPort }}
+      targetPort:  {{ .Values.service.serverPort }}
+      protocol: TCP
+      name: serverhttp
+      nodePort: {{ .Values.service.nodeServerPort }}
+  selector:
+  {{- include "network-resource.selectorLabels" . | nindent 4 }}

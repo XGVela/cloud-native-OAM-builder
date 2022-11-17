@@ -86,8 +86,8 @@ spec:
           volumeMounts:
             - mountPath: /data/oam-network-simulator/logs/
               name: oam-simulator-log
-            - mountPath: /root/config/
-              name: oam-simulator-config
+            - mountPath: /root/data/
+              name: oam-simulator-data
         - name: filebeat
           image: elastic/filebeat:7.8.1
           imagePullPolicy: {{ .Values.global.xgvela.image.pullPolicy}}
@@ -101,7 +101,7 @@ spec:
         - hostPath:
             path: /root/oam/cloud-native-OAM-builder/simulator/data
             type: DirectoryOrCreate
-          name: oam-simulator-config
+          name: oam-simulator-data
         - name: oam-simulator-log
           emptyDir: { }
         - name: filebeat-config

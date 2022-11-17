@@ -827,7 +827,7 @@ externalAccess:
     ## @param externalAccess.service.domain Domain or external ip used to configure Kafka external listener when service type is NodePort
     ## If not specified, the container will try to get the kubernetes node external IP
     ##
-    domain: 111.111.63.203
+    domain:
     ## @param externalAccess.service.annotations Service annotations for external access
     ##
     annotations: {}

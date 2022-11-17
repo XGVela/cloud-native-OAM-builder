@@ -137,6 +137,20 @@ prometheus-blackbox-exporter:
     pullPolicy: IfNotPresent
 #  nodeSelector:
 #    tag: business
+
+postgresql:
+  nameOverride: "oam-postgresql"
+  fullnameOverride: "oam-postgresql"
+  architecture: standalone
+  image:
+    registry: docker.io
+    repository: bitnami/postgresql
+    tag: 15.1.0-debian-11-r0
+    pullPolicy: Never
+  global:
+    auth:
+      postgresPassword: "Inspur@123"
+
 nacos:
   image:
     repository: nacos/nacos-server

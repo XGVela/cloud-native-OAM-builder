@@ -1,5 +1,7 @@
 # cloud-native-OAM-builder
 
+For newest installation guide, please go to https://github.com/XGVela/cloud-native-OAM/blob/main/docs/Installation_guide.md
+
 Cloud-native-OAM-builder provide packages of all cloud native OAM functions.
 
 ---
